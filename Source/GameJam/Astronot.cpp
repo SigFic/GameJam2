@@ -4,7 +4,8 @@
 #include "Astronot.h"
 
 // Sets default values
-AAstronot::AAstronot()
+AAstronot::AAstronot() :
+	bForMovement(false)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -15,9 +16,18 @@ AAstronot::AAstronot()
 void AAstronot::BeginPlay()
 {
 	Super::BeginPlay();
-//aaaaaa
-	//adadsa
 	
+	
+}
+
+void AAstronot::GoForwardFunction(float Value)
+{
+	AddMovementInput(FVector(1, 0, 0), Value);
+}
+
+void AAstronot::GoRightFunction(float Value)
+{
+	AddMovementInput(FVector(0,1, 0), Value);
 }
 
 // Called every frame
@@ -31,6 +41,9 @@ void AAstronot::Tick(float DeltaTime)
 void AAstronot::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+	PlayerInputComponent->BindAxis(FName("Forward"), this, &AAstronot::GoForwardFunction);
+	PlayerInputComponent->BindAxis(FName("Right"), this, &AAstronot::GoRightFunction);
 
 }
 
