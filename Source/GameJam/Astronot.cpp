@@ -7,10 +7,12 @@
 #include "GameFramework/CharacterMovementComponent.h"
 
 
+
 // Sets default values
 AAstronot::AAstronot() :
 	bForBlockMovement(false),
-	DefaultRuningSpeed(0.f)
+	DefaultRuningSpeed(0.f),
+	CharacterActifSkills(ECharacterSkills::ECS_Assimilation)
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
@@ -78,5 +80,33 @@ void AAstronot::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction(FName("Runing"), EInputEvent::IE_Pressed, this, &AAstronot::Runing);
 	PlayerInputComponent->BindAction(FName("Runing"), EInputEvent::IE_Released, this, &AAstronot::ReleasedRuningKeyFunction);
 
+}
+
+void AAstronot::UseSkill(ECharacterSkills CharacterSkills)
+{
+	switch (CharacterSkills)
+	{
+	case ECharacterSkills::ECS_Ghost:
+		break;
+	case ECharacterSkills::ECS_ThrowRock:
+		break;
+	case ECharacterSkills::ECS_Teleport:
+		break;
+	case ECharacterSkills::ECS_Dash:
+		break;
+	case ECharacterSkills::ECS_Hook:
+		break;
+	case ECharacterSkills::ECS_Stone:
+		break;
+	case ECharacterSkills::ECS_Max:
+		break;
+	default:
+		break;
+	}
+}
+
+void AAstronot::SetCharacterActiveSkill(ECharacterSkills Skill)
+{
+	CharacterActifSkills = Skill;
 }
 

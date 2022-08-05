@@ -6,7 +6,23 @@
 #include "GameFramework/Character.h"
 #include "Astronot.generated.h"
 
+UENUM()
+enum class ECharacterSkills
+{
+	ECS_Ghost UMETA(DisplayName = "Ghost"),
+	ECS_ThrowRock UMETA(DisplayName = "ThrowRock"),
+	ECS_Teleport UMETA(DisplayName = "Teleport"),
+	ECS_Dash UMETA(DisplayName = "Dash"),
+	ECS_Hook UMETA(DisplayName = "Hook"),
+	ECS_Stone UMETA(DisplayName = "Stone"),
+	ECS_Assimilation UMETA(DisplayName = "Assimilation"),
+
+	ECS_Max UMETA(DisplayName = "Max"),
+
+};
+
 UCLASS()
+
 class GAMEJAM_API AAstronot : public ACharacter
 {
 	GENERATED_BODY()
@@ -51,10 +67,19 @@ private:
 	UPROPERTY(VisibleAnywhere, Category = "Component")
 	class UCameraComponent* CameraComp = nullptr;
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	ECharacterSkills CharacterActifSkills;
+
+	void UseSkill(ECharacterSkills CharacterSkills);
+
 
 /*For Getter and setter functions*/
 public:
 	FORCEINLINE USpringArmComponent* GetSpringArmComp() const { return SpringArmComp; }
 
 	FORCEINLINE UCameraComponent* GetCameraComp() const { return CameraComp; }
+	
+	FORCEINLINE ECharacterSkills GetCharacterActiveSkill() const { return CharacterActifSkills; }
+	
+	void SetCharacterActiveSkill(ECharacterSkills Skill);
 };
