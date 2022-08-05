@@ -15,6 +15,7 @@ AAstronot::AAstronot()
 void AAstronot::BeginPlay()
 {
 	Super::BeginPlay();
+//aaaaaa
 	
 }
 
