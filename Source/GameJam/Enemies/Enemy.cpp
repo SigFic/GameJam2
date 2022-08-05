@@ -12,9 +12,14 @@ AEnemy::AEnemy()
 
 	VisionCone = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Vision Cone"));
 	VisionCone->SetupAttachment(RootComponent);
+	VisionCone->SetVisibility(false);
+	VisionCone->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::OnEnemyDetected);
+	VisionCone->OnComponentEndOverlap.AddDynamic(this, &AEnemy::EndEnemyDetected);
 
 	VisionDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Vision Decal"));
 	VisionDecal->SetupAttachment(VisionCone);
+
+
 
 }
 
@@ -23,6 +28,8 @@ void AEnemy::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	StartingLocation = GetActorLocation();
+
 }
 
 // Called every frame
@@ -42,4 +49,12 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void AEnemy::GiveAlaram()
 {
 
+}
+
+void AEnemy::OnEnemyDetected(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+{
+}
+
+void AEnemy::EndEnemyDetected(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
+{
 }
