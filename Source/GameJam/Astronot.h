@@ -23,6 +23,10 @@ protected:
 
 	void GoRightFunction(float Value);
 
+	void Runing();
+
+	void ReleasedRuningKeyFunction();
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -32,6 +36,25 @@ public:
 
 private:
 
-	bool bForMovement;
+	bool bForBlockMovement;
+	
+	/*store the default walk speed*/
+	float DefaultRuningSpeed;
 
+	//store the speed when you pressed shift key
+	UPROPERTY(EditDefaultsOnly ,BlueprintReadOnly ,  Category = "Component" , meta = (AllowPrivateAccess = "true"))
+	float SpeedWhileRuning;
+
+	UPROPERTY(VisibleAnywhere, Category = "Component")
+	class USpringArmComponent* SpringArmComp = nullptr;
+	
+	UPROPERTY(VisibleAnywhere, Category = "Component")
+	class UCameraComponent* CameraComp = nullptr;
+
+
+/*For Getter and setter functions*/
+public:
+	FORCEINLINE USpringArmComponent* GetSpringArmComp() const { return SpringArmComp; }
+
+	FORCEINLINE UCameraComponent* GetCameraComp() const { return CameraComp; }
 };
