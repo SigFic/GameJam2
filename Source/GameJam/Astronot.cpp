@@ -16,6 +16,7 @@ void AAstronot::BeginPlay()
 {
 	Super::BeginPlay();
 //aaaaaa
+	//adadsa
 	
 }
 
