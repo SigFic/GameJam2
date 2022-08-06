@@ -30,7 +30,7 @@ protected:
 	void GiveAlarm();
 
 	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
-	void OnAlarm(UObject* SourceObject);
+	void OnAlarm();
 
 	UPROPERTY(BlueprintReadWrite)
 	FVector StartingLocation;
@@ -49,6 +49,9 @@ protected:
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	float AdditionalAlarmSpeed = 900.0f;
+
+	UPROPERTY(BlueprintReadWrite)
+	bool bInAlarm = false;
 
 
 };
