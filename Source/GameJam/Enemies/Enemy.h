@@ -19,26 +19,18 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UFUNCTION(BlueprintCallable)
+	FVector GetNextPatrolLocation();
+
 protected:
 
 	virtual void BeginPlay() override;
 
-	virtual void GiveAlaram();
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void GiveAlarm();
 
-	UFUNCTION()
-	virtual void OnEnemyDetected(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
-
-	UFUNCTION()
-	void EndEnemyDetected(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	class UStaticMeshComponent* VisionCone = nullptr;
-
-	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
-	class UDecalComponent* VisionDecal = nullptr;
-
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (MakeEditWidget = "true"))
-	FVector TargetPatrolLocation;
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void OnAlarm(UObject* SourceObject);
 
 	UPROPERTY(BlueprintReadWrite)
 	FVector StartingLocation;
@@ -49,7 +41,16 @@ protected:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (EditCondition = "bMakePatrolWaitingDeflection", Units = "s"));
 	float WaitingDeflectionRange;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (MakeEditWidget = "true"))
+	TArray<FVector> TargetPatrolLocations;
 	
+	UPROPERTY(BlueprintReadWrite)
+	int LastPatrolIndex = 0;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	float AdditionalAlarmSpeed = 900.0f;
+
 
 };
+
 

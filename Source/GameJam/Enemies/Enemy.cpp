@@ -3,23 +3,13 @@
 
 #include "GameJam/Enemies/Enemy.h"
 #include "Components/DecalComponent.h"
+#include "GameFramework/CharacterMovementComponent.h"
 
 // Sets default values
 AEnemy::AEnemy()
 {
  	// Set this character to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
-
-	VisionCone = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Vision Cone"));
-	VisionCone->SetupAttachment(RootComponent);
-	VisionCone->SetVisibility(false);
-	VisionCone->OnComponentBeginOverlap.AddDynamic(this, &AEnemy::OnEnemyDetected);
-	VisionCone->OnComponentEndOverlap.AddDynamic(this, &AEnemy::EndEnemyDetected);
-
-	VisionDecal = CreateDefaultSubobject<UDecalComponent>(TEXT("Vision Decal"));
-	VisionDecal->SetupAttachment(VisionCone);
-
-
 
 }
 
@@ -46,15 +36,13 @@ void AEnemy::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void AEnemy::GiveAlaram()
-{
 
-}
-
-void AEnemy::OnEnemyDetected(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
+FVector AEnemy::GetNextPatrolLocation()
 {
-}
+	if (!TargetPatrolLocations.Num()) 
+		return StartingLocation;
 
-void AEnemy::EndEnemyDetected(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
-{
+	FVector NextLocation = TargetPatrolLocations[LastPatrolIndex++];
+	LastPatrolIndex = LastPatrolIndex % TargetPatrolLocations.Num();
+	return NextLocation;
 }
