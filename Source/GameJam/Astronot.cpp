@@ -37,12 +37,17 @@ AAstronot::AAstronot() :
 	ProjectileSpawnPoint = CreateDefaultSubobject<USceneComponent>(TEXT("Spawn point of Projectile"));
 	ProjectileSpawnPoint->SetupAttachment(RootComponent);
 
+	
+
 }
 
 // Called when the game starts or when spawned
 void AAstronot::BeginPlay()
 {
 	Super::BeginPlay();
+
+	if (OverrideInitialSkill)
+		SetCharacterActiveSkill(OverrideSkill);
 
 	bEnemyOverlappedWithAssimilation = false;
 	
@@ -163,9 +168,6 @@ void AAstronot::UseSkill()
 
 	switch (CharacterActifSkills)
 	{
-	case ECharacterSkills::ECS_Ghost:
-		UE_LOG(LogTemp, Warning, TEXT("Its working 1"));
-		break;
 	case ECharacterSkills::ECS_ThrowRock:
 		if (bCanThrowStone)
 		{
@@ -175,13 +177,24 @@ void AAstronot::UseSkill()
 		}
 		break;
 	case ECharacterSkills::ECS_Teleport:
+		Teleport();
 		break;
-	case ECharacterSkills::ECS_Dash:
-		break;
+
 	case ECharacterSkills::ECS_Hook:
+		Hook();
 		break;
+
 	case ECharacterSkills::ECS_Stone:
+		Stone();
 		break;
+	case ECharacterSkills::ECS_FireResistance:
+		FireResistance();
+		break;
+
+	case ECharacterSkills::ECS_MeltIce:
+		MeltIce();
+		break;
+
 	case ECharacterSkills::ECS_Max:
 		break;
 	default:
@@ -202,4 +215,3 @@ void AAstronot::SetCharacterActiveSkill(ECharacterSkills Skill)
 {
 	CharacterActifSkills = Skill;
 }
-

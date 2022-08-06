@@ -16,6 +16,8 @@ enum class ECharacterSkills
 	ECS_Hook UMETA(DisplayName = "Hook"),
 	ECS_Stone UMETA(DisplayName = "Stone"),
 	ECS_Assimilation UMETA(DisplayName = "Assimilation"),
+	ECS_FireResistance UMETA(DisplayName = "Fire Resistance"),
+	ECS_MeltIce UMETA(DisplayName = "Melt Ice"),
 
 	ECS_Max UMETA(DisplayName = "Max"),
 
@@ -113,6 +115,16 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
 	class USphereComponent* AreaSphereForAssimillitaion;
 
+
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", Category = "Abilities|Init", InlineEditConditionToggle))
+	bool OverrideInitialSkill = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, meta = (AllowPrivateAccess = "true", Category = "Abilities|Init", EditCondition = "OverrideInitialSkill"))
+	TEnumAsByte<ECharacterSkills> OverrideSkill;
+
+
+
 	bool bEnemyOverlappedWithAssimilation;
 
 	void UseSkill();
@@ -131,8 +143,26 @@ private:
 
 	UPROPERTY(EditDefaultsOnly , BlueprintReadWrite , Category = "Component" , meta = (AllowPrivateAccess = "true"))
 	float TimeBetweenThrowingStone;
+
+
+
+
 /*For Getter and setter functions*/
 public:
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void Teleport();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void Hook();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void Stone();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void FireResistance();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void MeltIce();
 	FORCEINLINE USpringArmComponent* GetSpringArmComp() const { return SpringArmComp; }
 
 	FORCEINLINE UCameraComponent* GetCameraComp() const { return CameraComp; }
