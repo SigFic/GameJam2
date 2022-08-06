@@ -43,6 +43,41 @@ protected:
 
 	void ReleasedRuningKeyFunction();
 
+
+	UFUNCTION()
+	void OnInfoSphereOverlapped(UPrimitiveComponent* OverlappedComp,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComponent,
+		int32 OtherBodyIndex,
+		bool bFromSweep,
+		const FHitResult& SweepHitResult);
+
+
+	UFUNCTION()
+	void OnInfoSphereEndOverlapped(UPrimitiveComponent* OverlappedComp,
+		AActor* OtherActor,
+		UPrimitiveComponent* OtherComp,
+		int32 OtherBodyIndex);
+
+	
+	UFUNCTION()
+		void OnAssimillitionSphereOverlapped(UPrimitiveComponent* OverlappedComp,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComponent,
+			int32 OtherBodyIndex,
+			bool bFromSweep,
+			const FHitResult& SweepHitResult);
+
+
+	UFUNCTION()
+		void OnAssimillitionSphereEndOverlapped(UPrimitiveComponent* OverlappedComp,
+			AActor* OtherActor,
+			UPrimitiveComponent* OtherComp,
+			int32 OtherBodyIndex);
+
+	void SetTimerBetweenThrowRock();
+	
+
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
@@ -70,9 +105,32 @@ private:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
 	ECharacterSkills CharacterActifSkills;
 
-	void UseSkill(ECharacterSkills CharacterSkills);
+	/*attaced to RootComponent*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	class USphereComponent* AreaSphere;
 
+	/*attaced to RootComponent*/
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	class USphereComponent* AreaSphereForAssimillitaion;
 
+	bool bEnemyOverlappedWithAssimilation;
+
+	void UseSkill();
+
+	void SpawnProjectileToWorld();
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	TSubclassOf<class AStoneProjectile> StoneProjectileClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Component", meta = (AllowPrivateAccess = "true"))
+	USceneComponent* ProjectileSpawnPoint = nullptr;
+
+	bool bCanThrowStone;
+
+	FTimerHandle ThrowStoneTimer;
+
+	UPROPERTY(EditDefaultsOnly , BlueprintReadWrite , Category = "Component" , meta = (AllowPrivateAccess = "true"))
+	float TimeBetweenThrowingStone;
 /*For Getter and setter functions*/
 public:
 	FORCEINLINE USpringArmComponent* GetSpringArmComp() const { return SpringArmComp; }
