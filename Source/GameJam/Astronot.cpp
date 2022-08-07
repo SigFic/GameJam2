@@ -44,6 +44,7 @@ AAstronot::AAstronot() :
 // Called when the game starts or when spawned
 void AAstronot::BeginPlay()
 {
+	;
 	Super::BeginPlay();
 
 	if (OverrideInitialSkill)
